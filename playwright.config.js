@@ -12,26 +12,40 @@ import { defineConfig, devices } from '@playwright/test';
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
-export default defineConfig({
-  testDir: './tests',
-  /* Run tests in files in parallel */
-  fullyParallel: true,
-  /* Fail the build on CI if you accidentally left test.only in the source code. */
-  forbidOnly: !!process.env.CI,
-  /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
-  /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
-  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
+module.exports = defineConfig({
+  testDir: './tests',         // where your test specs are
+  timeout: 30 * 1000,         // default timeout
+  retries: 1,                 // retry failing tests once
+  reporter: [['list'], ['html']],  // nice HTML report
+
   use: {
+    headless: true,                    // run in headless mode
+    screenshot: 'on',                  // take screenshot on every failure
+    video: 'on',                      // record video if test fails first time
+    trace: 'on',                      // record trace if test fails first time
+  },
+//export default defineConfig({
+  //testDir: './tests',
+  /* Run tests in files in parallel */
+  // fullyParallel: true,
+  /* Fail the build on CI if you accidentally left test.only in the source code. */
+  // forbidOnly: !!process.env.CI,
+  /* Retry on CI only */
+  // retries: process.env.CI ? 2 : 0,
+  /* Opt out of parallel tests on CI. */
+  // workers: process.env.CI ? 1 : undefined,
+  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
+  //reporter: [['html', { open: 'never' }], ['list']], // HTML + console list
+  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
+  //use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',
-
+    // headless: true,
+    // screenshot: 'only-on-failure',  // capture screenshot only when test fails
+    // video: 'on',
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
-  },
+    // trace: 'on',
+  //},
 
   /* Configure projects for major browsers */
   projects: [
@@ -78,4 +92,3 @@ export default defineConfig({
   //   reuseExistingServer: !process.env.CI,
   // },
 });
-
