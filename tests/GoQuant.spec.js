@@ -19,7 +19,7 @@ test('Register with valid user with trace', async ({ browser }) => {
 
   await buggy.gotoHome();
   await buggy.gotoRegister();
-  await buggy.registerUser('MyUser_30', 'Firstname_1', 'Lastname_1', 'GoQuant_DN_User_1');
+  await buggy.registerUser('MyUser_40', 'Firstname_1', 'Lastname_1', 'GoQuant_DN_User_1');
   const myText = page.locator('text=Registration is successful');
   await expect(myText).toBeVisible;
   await page.waitForTimeout(3000);
@@ -34,11 +34,11 @@ test('Login and update profile', async ({ browser }) => {
   const buggy = new BuggyPage(page);
 
   await buggy.gotoHome();
-  await buggy.login('MyUser_300000', 'GoQuant_DN_User_1');
+  await buggy.login('MyUser_400000', 'GoQuant_DN_User_1');
 
   //profile update
   await page.locator('[href="/profile"]').click()
-  await page.locator('#firstName').fill('MyUser_300000_Updated');
+  await page.locator('#firstName').fill('MyUser_400000_Updated');
   await page.locator('.btn.btn-default')
 //   await this.saveProfileButton.click();
   await page.waitForTimeout(4000);
@@ -58,7 +58,7 @@ test('Register user with password < 6 chars', async ({ browser }) => {
   const buggy = new BuggyPage(page);
 
   await buggy.page.goto("https://buggy.justtestit.org/register");
-  await buggy.registerUser('MyUser_30', 'Firstname_1', 'Lastname_1', 'MyUser');
+  await buggy.registerUser('MyUser_40', 'Firstname_1', 'Lastname_1', 'MyUser');
   await expect(buggy.errorMessage).toBeVisible();
   await expect(buggy.errorMessage).toContainText('Password not long enough')
 
@@ -74,7 +74,7 @@ test('Register with existing user', async ({ browser }) => {
 
   await buggy.gotoHome();
   await buggy.gotoRegister();
-  await buggy.registerUser('MyUser_300000', 'Firstname_1', 'Lastname_1', 'GoQuant_DN_User_1');
+  await buggy.registerUser('MyUser_400000', 'Firstname_1', 'Lastname_1', 'GoQuant_DN_User_1');
   await expect(buggy.errorMessage).toBeVisible();
 
   await stopTrace();
